@@ -4,6 +4,6 @@ import { validateUser } from "../middlewares/user.middleware.js";
 
 const router = Router();
 
-router.get("/register", validateUser, userController);
+router.post("/register", validateUser, userController);
 
 export default router;

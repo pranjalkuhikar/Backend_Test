@@ -12,8 +12,10 @@ const validateUser = [
   body("password")
     .isString()
     .withMessage("Password must be a string")
-    .isLength({ min: 8 })
-    .withMessage("Password must be at least 8 characters long"),
+    .isLength({ min: 2, max: 128 })
+    .withMessage(
+      "Password must be at least 2 characters or less than 128 characters"
+    ),
 ];
 
 export { validateUser };
