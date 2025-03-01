@@ -27,3 +27,14 @@ export const createUser = async ({ username, email, password }) => {
 
   return user;
 };
+
+export const loginUser = async ({ email, password }) => {
+  const user = await User.findOne({ email });
+  if (!user) throw new Error("Invalid Credentials");
+
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) throw new Error("Invalid Credentials");
+
+  delete user._doc.password;
+  return user;
+};

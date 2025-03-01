@@ -42,7 +42,7 @@ userSchema.statics.hashPassword = async (password) => {
   return bcrypt.hash(password, salt);
 };
 
-userSchema.methods.comparePassword = async (password) => {
+userSchema.methods.comparePassword = async function (password) {
   if (!password) throw new Error("Password is required");
   if (!this.password) throw new Error("Password is not valid");
   return await bcrypt.compare(password, this.password);

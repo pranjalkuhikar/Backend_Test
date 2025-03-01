@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-const validateUser = [
+export const validateRegisterUser = [
   body("username")
     .isString()
     .withMessage("username must be string")
@@ -18,4 +18,13 @@ const validateUser = [
     ),
 ];
 
-export { validateUser };
+export const validateLoginUser = [
+  body("email").isEmail().withMessage("Email must be valid"),
+  body("password")
+    .isString()
+    .withMessage("Password must be a string")
+    .isLength({ min: 2, max: 128 })
+    .withMessage(
+      "Password must be at least 2 characters or less than 128 characters"
+    ),
+];
