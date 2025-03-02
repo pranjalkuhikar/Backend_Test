@@ -1,3 +1,10 @@
+import { validationResult } from "express-validator";
+
 export const userRegister = (req, res) => {
-  res.send("Hello world123!");
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  res.send("Hello world");
 };
