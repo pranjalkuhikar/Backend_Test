@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import config from "../config/config.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -25,6 +27,34 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+userSchema.statics.generateHashPassword = async function (password) {
+  if (!password) throw new Error("Password is required");
+  const salt = await bcrypt.salt(10);
+  return bcrypt.hash(password, salt);
+};
+
+userSchema.methods.comparePassword = async function (password) {
+  if (!password) throw new Error("Password is required");
+  if (!this.password) throw new Error("Password is required");
+  return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.generateToken = function () {
+  const token = jwt.sign(
+    { id: this._id, username: this.username, email: this.email },
+    config.JWT_SECRET,
+    {
+      expiresIn: config.JWT_EXPIRATION,
+    }
+  );
+  return token;
+};
+
+userSchema.statics.verifyToken = function ({ token }) {
+  if (!token) throw new Error("Invalid token");
+  return jwt.verify(token, config.JWT_SECRET);
+};
 
 const User = mongoose.model("User", userSchema);
 
