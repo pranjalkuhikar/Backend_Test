@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import config from "../config/config.js";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
   {
@@ -15,7 +16,6 @@ const userSchema = new mongoose.Schema(
       required: [true, "Email is required"],
       unique: true,
       trim: true,
-      match: [/.+\@.+\..+/, "Please fill a valid email address"],
     },
     password: {
       type: String,
@@ -28,9 +28,9 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.statics.generateHashPassword = async function (password) {
+userSchema.statics.hashPassword = async function (password) {
   if (!password) throw new Error("Password is required");
-  const salt = await bcrypt.salt(10);
+  const salt = await bcrypt.genSalt(10);
   return bcrypt.hash(password, salt);
 };
 
