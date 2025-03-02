@@ -14,8 +14,6 @@ export const userRegister = async (req, res) => {
     res.status(201).json({ user, token });
   } catch (error) {
     console.log(error);
-    res.status(500).send("Server Error", error.message);
+    res.status(500).send(error.message);  
   }
-
-  res.send("Hello world");
 };
