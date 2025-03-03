@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 
-export const userRegister = async ({ username, email, password }) => {
+export const createUser = async ({ username, email, password }) => {
   if (!username || !email || !password)
     throw new Error("All field is required");
 
