@@ -22,8 +22,7 @@ export const userLogin = [
   validateLoginUser,
   async (req, res) => {
     try {
-      const { email, password } = req.body;
-      const user = await loginUser({ email, password });
+      const user = await loginUser(req.body);
       const token = user.generateToken();
       res.status(201).json({ user, token });
     } catch (error) {
