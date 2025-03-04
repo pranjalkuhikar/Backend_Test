@@ -1,9 +1,8 @@
 import { Router } from "express";
+import { createUser } from "../controllers/user.controllers.js";
 
 const router = Router();
 
-router.get("/create", (req, res) => {
-  res.send("Create a new product");
-});
+router.get("/create", createUser);
 
 export default router;
