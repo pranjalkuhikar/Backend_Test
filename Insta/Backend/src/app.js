@@ -1,9 +1,8 @@
 import express from "express";
+import CRUDAPI from "./routes/user.routes.js";
 
 const app = express();
 
-app.use("/", (req, res) => {
-  res.json({ message: "Welcome to the Express API!" });
-});
+app.use("/", CRUDAPI);
 
 export default app;
