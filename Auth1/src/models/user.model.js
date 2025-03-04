@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import config from "../config/config";
+import config from "../config/config.js";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -39,9 +39,9 @@ userSchema.methods.isValidPassword = async function (password) {
 userSchema.methods.generateToken = function () {
   const token = jwt.sign(
     { id: this._id, username: this.username, email: this.email },
-    config.JWT_SECRET,
+    config.SECRET,
     {
-      expiresIn: config.JWT_EXPIRATION_TIME,
+      expiresIn: config.EXPIRE,
     }
   );
   return token;
@@ -49,7 +49,7 @@ userSchema.methods.generateToken = function () {
 
 userSchema.statics.verifyToken = function ({ token }) {
   if (!token) throw new Error("Token Required");
-  return token.verify(token, config.JWT_SECRET);
+  return token.verify(token, config.SECRET);
 };
 
 const User = mongoose.model("User", userSchema);
