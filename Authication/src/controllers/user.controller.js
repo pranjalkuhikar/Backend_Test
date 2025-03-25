@@ -55,3 +55,23 @@ export const login = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+export const profile = async (req, res) => {
+  const token = req.header("Authorization").split(" ")[1];
+  if (!token) {
+    return res.status(401).send("Access Denied");
+  }
+
+  const verify = jwt.verify(token, config.TOKEN_SECRET);
+  // console.log(verify);
+  if (!verify) {
+    return res.status(401).send("Access Denied");
+  }
+
+  const user = await User.findById(verify.user);
+  // console.log(user);
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+  res.send(user);
+};
