@@ -31,3 +31,27 @@ export const register = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).send("All fields are required");
+    }
+
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(401).send("Invalid credentials");
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(401).send("Invalid credentials");
+    }
+    const token = jwt.sign({ user: user._id }, config.TOKEN_SECRET);
+
+    res.status(200).send({ message: "User Login successfully", token });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server Error");
+  }
+};
