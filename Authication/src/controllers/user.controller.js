@@ -1,3 +1,3 @@
-export const userController = (req, res) => {
-  res.status(200).json({ message: "Welcome to the User API!" });
+export const register = (req, res) => {
+  res.send("register");
 };
