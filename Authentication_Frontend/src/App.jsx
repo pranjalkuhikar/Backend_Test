@@ -1,5 +1,11 @@
+import Register from "./components/Register";
+
 const App = () => {
-  return <div>App</div>;
+  return (
+    <>
+      <Register />
+    </>
+  );
 };
 
 export default App;
