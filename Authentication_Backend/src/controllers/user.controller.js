@@ -58,6 +58,7 @@ export const login = async (req, res) => {
 
 export const profile = async (req, res) => {
   const token = req.header("Authorization").split(" ")[1];
+  console.log(req.cookies);
   // console.log(token);
   if (!token) {
     return res.status(401).send("Access Denied");
