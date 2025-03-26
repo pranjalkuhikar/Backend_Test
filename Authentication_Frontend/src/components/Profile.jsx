@@ -22,7 +22,7 @@ const Profile = () => {
         setProfileData(response.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  });
 
   const handleLogout = () => {
     localStorage.removeItem("token");
