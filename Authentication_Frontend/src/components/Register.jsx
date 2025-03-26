@@ -27,7 +27,7 @@ const Register = () => {
         password: password,
       })
       .then((res) => {
-        localStorage.setItem({ token: res.data.token });
+        localStorage.setItem("token", res.data.token);
         navigate("/profile");
       })
       .catch((err) => console.log(err));
