@@ -27,7 +27,7 @@ const Profile = () => {
               <strong>Location:</strong> New York, USA
             </li>
             <li>
-              <strong>Phone:</strong> +1 234 567 890
+              <strong>Email:</strong> pranjal@gmail.com
             </li>
             <li>
               <strong>Member Since:</strong> January 2023
