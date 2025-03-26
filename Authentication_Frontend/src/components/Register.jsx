@@ -1,5 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -8,14 +9,28 @@ const Register = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    let { username, email, password } = formData;
     console.log("Form Data Submitted:", formData);
+    await axios
+      .post("http://localhost:3000/register", {
+        username: username,
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        localStorage.setItem({ token: res.data.token });
+        navigate("/profile");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
